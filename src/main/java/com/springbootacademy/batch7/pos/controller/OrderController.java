@@ -1,8 +1,6 @@
 package com.springbootacademy.batch7.pos.controller;
 
-import com.springbootacademy.batch7.pos.dto.request.ItemSaveRequestDTO;
 import com.springbootacademy.batch7.pos.dto.request.OrderSaveRequestDTO;
-import com.springbootacademy.batch7.pos.service.ItemService;
 import com.springbootacademy.batch7.pos.service.OrderService;
 import com.springbootacademy.batch7.pos.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;

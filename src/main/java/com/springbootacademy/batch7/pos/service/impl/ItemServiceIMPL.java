@@ -109,10 +109,9 @@ public class ItemServiceIMPL implements ItemService {
         if (items.getSize() < 1) {
             throw new NotFoundException("No Items Found");
         }
-        PaginatedResponseItemDTO paginatedResponseItemDTO = new PaginatedResponseItemDTO(
+        return new PaginatedResponseItemDTO(
                 itemMapper.PageEntityToListDTO(items),
                 count
         );
-        return paginatedResponseItemDTO;
     }
 }
