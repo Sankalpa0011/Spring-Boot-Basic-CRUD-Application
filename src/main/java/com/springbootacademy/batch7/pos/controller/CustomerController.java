@@ -59,7 +59,7 @@ public class CustomerController {
     public ResponseEntity<StandardResponse> getAllCustomers() {
         List<CustomerDTO> allCustomers = customerService.getAllCustomers();
         return new ResponseEntity<StandardResponse>(
-                new StandardResponse(201, "Success", allCustomers),
+                new StandardResponse(200, "Success", allCustomers),
                 HttpStatus.OK
         );
     }
