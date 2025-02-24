@@ -1,6 +1,9 @@
 package com.springbootacademy.batch7.pos.service.impl;
 
+import com.springbootacademy.batch7.pos.dto.paginated.PaginatedResponseOrderDetailsDTO;
+import com.springbootacademy.batch7.pos.dto.queryinterfaces.OrderDetailInterface;
 import com.springbootacademy.batch7.pos.dto.request.OrderSaveRequestDTO;
+import com.springbootacademy.batch7.pos.dto.response.OrderDetailsResponseDTO;
 import com.springbootacademy.batch7.pos.entity.Order;
 import com.springbootacademy.batch7.pos.entity.OrderDetails;
 import com.springbootacademy.batch7.pos.repo.CustomerRepo;
@@ -11,6 +14,7 @@ import com.springbootacademy.batch7.pos.service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +36,7 @@ public class OrderServiceIMPL implements OrderService {
 
     @Autowired
     private OrderDetailsRepo orderDetailsRepo;
+
     @Autowired
     private ItemRepo itemRepo;
 
@@ -41,7 +46,8 @@ public class OrderServiceIMPL implements OrderService {
         Order order = new Order(
                 customerRepo.getReferenceById(orderSaveRequestDTO.getCustomer()),
                 orderSaveRequestDTO.getOrderDate(),
-                orderSaveRequestDTO.getTotal()
+                orderSaveRequestDTO.getTotal(),
+                orderSaveRequestDTO.isActiveStatus()
         );
         orderRepo.save(order);
 
@@ -58,5 +64,27 @@ public class OrderServiceIMPL implements OrderService {
             return "Saved";
         }
         return "Failed";
+    }
+
+    //join query
+    @Override
+    public PaginatedResponseOrderDetailsDTO getAllOrderDetails(boolean status, int page, int size) {
+        List<OrderDetailInterface> orderDetailsDTO = orderRepo.getAllOrderDetails(status, PageRequest.of(page, size));
+
+        List<OrderDetailsResponseDTO> list = new ArrayList<>();
+        for (OrderDetailInterface orderDetail : orderDetailsDTO) {
+            OrderDetailsResponseDTO responseDTO = new OrderDetailsResponseDTO(
+                    orderDetail.getCustomerName(),
+                    orderDetail.getCustomerAddress(),
+                    orderDetail.getContactNumber(),
+                    orderDetail.getOrderDate(),
+                    orderDetail.getTotal()
+            );
+            list.add(responseDTO);
+        }
+        PaginatedResponseOrderDetailsDTO paginatedResponseOrderDetailsDTO = new PaginatedResponseOrderDetailsDTO(
+                list,
+                orderRepo.countAllOrderDetails(status));
+        return paginatedResponseOrderDetailsDTO;
     }
 }
