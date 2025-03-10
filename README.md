@@ -13,6 +13,7 @@ This project is a basic CRUD (Create, Read, Update, Delete) application built wi
 - Integration with a MySQL database
 - Exception handling
 - Input validation
+- API documentation using OpenAPI (SpringDoc)
 
 ## Technologies Used
 
@@ -21,12 +22,16 @@ This project is a basic CRUD (Create, Read, Update, Delete) application built wi
 - **Spring Data JPA**: For ORM (Object Relational Mapping) and database interactions.
 - **Hibernate**: For ORM (Object Relational Mapping).
 - **MySQL**: The relational database used.
+- **SpringDoc OpenAPI**: For API documentation.
+- **Lombok**: For reducing boilerplate code.
+- **ModelMapper**: For object mapping.
+- **MapStruct**: For object mapping.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Java 8 or higher
+- Java 17 or higher
 - Maven 3.6.0 or higher
 - MySQL or any other relational database
 
